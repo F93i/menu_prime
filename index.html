@@ -1,24 +1,198 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>بلياردو ستيشن</title>
-    <style>
-      /* إزالة أي margin/padding من المتصفح */
-      *, *::before, *::after { box-sizing: border-box; }
-      html, body, #root {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        min-height: 100vh;
-        overflow-x: hidden;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prime Wash VIP | قائمة الأسعار وحجز المواعيد</title>
+<meta name="description" content="قائمة أسعار Prime Wash VIP للعناية بالسيارات في جدة. احجز موعد غسيل أو تلميع ماسي عبر واتساب.">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Reem+Kufi:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#000;--panel:#08131c;--line:#16293a;--ink:#fff;--mute:#9fb3c4;--blue:#5bb5ea;--blue-d:#2f8fc9;--wa:#25d366}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans Arabic",Tahoma,sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}
+h1,h2,h3,.price{font-family:"Reem Kufi","IBM Plex Sans Arabic",sans-serif}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 18px}
+
+/* hero */
+.hero{text-align:center;padding:28px 0 0}
+.hero img{width:min(420px,82%);height:auto;display:block;margin:0 auto}
+.hero p{color:var(--mute);margin-top:4px}
+.wave{display:block;width:100%;height:56px;margin-top:10px}
+
+/* filters */
+.bar{position:sticky;top:0;z-index:5;background:rgba(0,0,0,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:12px 18px;max-width:1040px;margin:0 auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;border:1px solid var(--line);background:transparent;color:var(--mute);font:inherit;font-size:.95rem;padding:7px 18px;border-radius:99px;cursor:pointer;transition:.2s}
+.tab[aria-pressed=true]{background:var(--blue);border-color:var(--blue);color:#001;font-weight:600}
+
+/* cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:18px;padding:26px 0 40px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px;display:flex;flex-direction:column}
+.card.vip{border-color:var(--blue)}
+.card h2{font-size:1.4rem;line-height:1.3}
+.tag{display:inline-block;font-size:.78rem;color:var(--blue);margin-bottom:6px}
+.sizes{list-style:none;padding:0;margin:14px 0 4px;border-top:1px solid var(--line)}
+.sizes li{display:flex;justify-content:space-between;align-items:baseline;padding:9px 0;border-bottom:1px dashed var(--line);color:var(--mute);font-size:.95rem}
+.price{font-size:1.35rem;color:var(--ink)}
+.price small{font-size:.8rem;color:var(--blue);margin-inline-start:4px;font-family:inherit}
+.feat{list-style:none;padding:0;margin:12px 0 16px;font-size:.92rem;color:#cfdce8;flex:1}
+.feat li{position:relative;padding-inline-start:20px;margin-bottom:3px}
+.feat li::before{content:"";position:absolute;inset-inline-start:2px;top:.72em;width:8px;height:8px;border-radius:50%;background:var(--blue)}
+.note{font-size:.82rem;color:var(--blue);margin-bottom:14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:12px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;text-decoration:none;transition:.2s}
+.btn-wa{background:#fff;color:#000}
+.btn-wa:hover{background:var(--blue)}
+.card .btn{width:100%}
+.hidden{display:none!important}
+
+/* footer */
+footer{border-top:1px solid var(--line);text-align:center;padding:28px 18px 90px;color:var(--mute);font-size:.92rem}
+footer a{color:var(--blue)}
+.fab{position:fixed;inset-inline-start:16px;bottom:16px;z-index:6;box-shadow:0 6px 24px rgba(91,181,234,.3)}
+
+/* dialog */
+dialog{border:1px solid var(--blue);border-radius:20px;background:var(--panel);color:var(--ink);width:min(440px,calc(100% - 28px));padding:24px;margin:auto}
+dialog::backdrop{background:rgba(0,0,0,.75)}
+dialog h3{font-size:1.4rem;margin-bottom:2px}
+dialog p{color:var(--mute);font-size:.9rem;margin-bottom:14px}
+label{display:block;font-size:.88rem;color:var(--mute);margin:10px 0 4px}
+input,select{width:100%;font:inherit;color:var(--ink);background:#000;border:1px solid var(--line);border-radius:10px;padding:10px 12px;color-scheme:dark}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.acts{display:flex;gap:10px;margin-top:18px}
+.acts .btn{flex:1}
+.btn-x{background:transparent;color:var(--mute);border:1px solid var(--line)}
+.err{color:#ff8a8a;font-size:.85rem;min-height:1.2em;margin-top:8px}
+</style>
+</head>
+<body>
+
+<header class="hero wrap">
+  <img src="logo.png" alt="شعار Prime Wash VIP" width="1202" height="675">
+  <p>قائمة الأسعار · عناية وتنظيف باحترافية</p>
+  <svg class="wave" viewBox="0 0 1000 56" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 40 C 220 -4, 420 6, 640 30 S 920 50, 1000 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+    <path d="M0 46 C 240 6, 440 14, 660 38 S 930 54, 1000 32" fill="none" stroke="#5bb5ea" stroke-width="3" stroke-linecap="round" opacity=".85"/>
+  </svg>
+</header>
+
+<nav class="bar" aria-label="تصفية الخدمات">
+  <div class="tabs" id="tabs">
+    <button class="tab" data-f="all" aria-pressed="true">الكل</button>
+    <button class="tab" data-f="out" aria-pressed="false">خارجي</button>
+    <button class="tab" data-f="in" aria-pressed="false">داخلي</button>
+    <button class="tab" data-f="pol" aria-pressed="false">تلميع وماسي</button>
+  </div>
+</nav>
+
+<main class="wrap">
+  <div class="grid" id="grid"></div>
+</main>
+
+<footer>
+  <p>Prime Wash VIP للعناية بالسيارات — جودة تليق بمركبتك</p>
+  <p><a href="https://maps.google.com/maps?q=C73W%2BR3F+الاجاويد+جدة" target="_blank" rel="noopener">الموقع: الأجاويد، جدة</a></p>
+</footer>
+
+<button class="btn btn-wa fab" id="fab">احجز موعدك</button>
+
+<dialog id="dlg">
+  <form method="dialog" id="f" novalidate>
+    <h3>احجز موعدك</h3>
+    <p>تعبّي البيانات وتنفتح لك المحادثة على واتساب جاهزة للإرسال.</p>
+    <label for="name">الاسم</label>
+    <input id="name" autocomplete="name" required>
+    <label for="svc">الخدمة</label>
+    <select id="svc"></select>
+    <label for="size">حجم المركبة</label>
+    <select id="size"></select>
+    <div class="row">
+      <div><label for="date">التاريخ</label><input type="date" id="date" required></div>
+      <div><label for="time">الوقت</label><input type="time" id="time" required></div>
+    </div>
+    <div class="err" id="err" role="alert"></div>
+    <div class="acts">
+      <button type="submit" class="btn btn-wa">إرسال عبر واتساب</button>
+      <button type="button" class="btn btn-x" id="close">إلغاء</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+/* ===== إعدادات: غيّر الرقم هنا (بصيغة دولية بدون + أو 00) ===== */
+const WHATSAPP = "966555404229";
+
+const S = "سيارات صغيرة", M = "سيارات وسط", L = "سيارات كبيرة", XL = "سيارات كبيرة (جيب، فان، باصات)";
+const DATA = [
+ {id:"wax", cat:"out", name:"غسيل شامبو وواكس", tag:"خارجي", p:[[S,25],[M,30],[L,35],[XL,40]],
+  f:["شامبو وواكس من شركة فيكس","أكياس دعاسات أمامية","أكياس للطارة","معطر للمركبة","مناديل مايكروفايبر","ملمع خاص للإطارات"]},
+ {id:"pre", cat:"out", name:"غسيل تحضيري", tag:"خارجي", p:[[S,35],[M,40],[L,45]],
+  f:["شامبو تحضيري","شامبو وواكس","أكياس للدعاسات الأمامية","أكياس للطارة","معطر للمركبة","مناديل مايكروفايبر","ملمع خاص للإطارات"]},
+ {id:"stm", cat:"in", name:"غسيل بالبخار", tag:"داخلي", p:[[S,60],[M,70],[L,80]],
+  f:["تنظيف وتعقيم أساسي","إزالة الأتربة والأوساخ (الأبواب، الديكور، المراتب، الجنوط، الإطارات)","مرتبة للديكورات الداخلية","تكييس جميع الدعاسات","أكياس للطارة","معطر للمركبة","مناديل مايكروفايبر"]},
+ {id:"vip", cat:"in", vip:1, booking:1, name:"غسيل داخلي VIP", tag:"داخلي · الأشمل", p:[[S,160],[M,180],[L,200]],
+  f:["غسيل وجلد + واكس","إزالة الأوساخ الداخلية والتعقيم (المقاعد، الديكور، الأبواب)","مرتبة للديكورات الداخلية","ملمع وجه الطبلون","تنظيف شامل للأرضيات","معطر للمركبة","تكييس جميع الدعاسات","تنظيف الجلد (الطارة، الكراسي، المساحات، القير)"]},
+ {id:"din", cat:"pol", name:"تلميع ماسي داخلي", tag:"تلميع", booking:1, p:[[S,350],[M,400],[L,500]],
+  f:["تنظيف عميق وشامل","تجميع الأجزاء الداخلية","استخدام أفضل المنظفات الاحترافية"]},
+ {id:"dout", cat:"pol", name:"تلميع ماسي خارجي", tag:"تلميع", booking:1, p:[[S,350],[M,400],[L,500]],
+  f:["إزالة الخدوش السطحية","تلميع الهيكل الخارجي بالكامل","استخدام المعاجين والأحبار الأصلية"]}
+];
+const EXTRA = ["wax","pre","stm","vip"];
+const $ = s => document.querySelector(s);
+const grid = $("#grid"), dlg = $("#dlg"), svc = $("#svc"), size = $("#size");
+
+grid.innerHTML = DATA.map(d => `
+ <article class="card${d.vip?" vip":""}" data-cat="${d.cat}">
+  <span class="tag">${d.tag}</span>
+  <h2>${d.name}</h2>
+  <ul class="sizes">${d.p.map(([n,v])=>`<li><span>${n}</span><span class="price">${v}<small>ريال</small></span></li>`).join("")}</ul>
+  <ul class="feat">${d.f.map(x=>`<li>${x}</li>`).join("")}</ul>
+  ${EXTRA.includes(d.id)?'<div class="note">أي إضافة أخرى +5 ريال</div>':""}
+  ${d.booking?`<button class="btn btn-wa" data-book="${d.id}">${d.cat==="pol"?"احجز موعد التلميع":"احجز غسيل VIP"}</button>`:""}
+ </article>`).join("");
+
+svc.innerHTML = DATA.filter(d=>d.booking).map(d=>`<option value="${d.id}">${d.name}</option>`).join("");
+function fillSizes(){
+  const d = DATA.find(x=>x.id===svc.value);
+  size.innerHTML = d.p.map(([n,v])=>`<option value="${n}|${v}">${n} — ${v} ريال</option>`).join("");
+}
+svc.addEventListener("change", fillSizes);
+
+function openBook(id){
+  svc.value = id || "din"; fillSizes();
+  const t = new Date(); t.setDate(t.getDate()+0);
+  $("#date").min = t.toISOString().slice(0,10);
+  $("#err").textContent = "";
+  dlg.showModal();
+}
+grid.addEventListener("click", e => { const b = e.target.closest("[data-book]"); if(b) openBook(b.dataset.book); });
+$("#fab").addEventListener("click", () => openBook("din"));
+$("#close").addEventListener("click", () => dlg.close());
+dlg.addEventListener("click", e => { if(e.target === dlg) dlg.close(); });
+
+$("#f").addEventListener("submit", e => {
+  e.preventDefault();
+  const name = $("#name").value.trim(), date = $("#date").value, time = $("#time").value;
+  if(!name || !date || !time){ $("#err").textContent = "عبّ الاسم والتاريخ والوقت عشان نكمل الحجز."; return; }
+  const d = DATA.find(x=>x.id===svc.value), [sz, pr] = size.value.split("|");
+  const msg = `السلام عليكم، حاب أحجز موعد في Prime Wash VIP:\n` +
+    `الاسم: ${name}\nالخدمة: ${d.name}\nحجم المركبة: ${sz}\nالسعر: ${pr} ريال\nالتاريخ: ${date}\nالوقت: ${time}`;
+  window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, "_blank", "noopener");
+  dlg.close();
+});
+
+$("#tabs").addEventListener("click", e => {
+  const t = e.target.closest(".tab"); if(!t) return;
+  document.querySelectorAll(".tab").forEach(b => b.setAttribute("aria-pressed", b===t));
+  document.querySelectorAll(".card").forEach(c => c.classList.toggle("hidden", t.dataset.f!=="all" && c.dataset.cat!==t.dataset.f));
+});
+</script>
+</body>
 </html>
